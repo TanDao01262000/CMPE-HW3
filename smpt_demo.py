@@ -1,65 +1,63 @@
 from socket import *
 
-msg = "\r\n I love computer networks!"
-endmsmg = "\r\n.\r\n"
+msg = "\r\nI love computer networks!"
+endmsg = "\r\n.\r\n"
 
-# Choose a mail server (e.g. Google mail server) and call it mailserver
-mailserver = #Fill in start             #Fill in end
+# Choose a mail server (use the free SMTP server) and call it mailserver
+mail_server = "smtp.freesmtpservers.com"
 
-# Create socket called clientSocket and establish a TCP connection with mailserver
-#Fill in start
+# Create a socket called clientSocket and establish a TCP connection with mailserver
+client_socket = socket(AF_INET, SOCK_STREAM)
+client_socket.connect((mail_server, 25))
 
-
-#Fill in end
-
-recv = clientSocket.recv(1024).decode()
+recv = client_socket.recv(1024).decode()
 print(recv)
 if recv[:3] != '220':
-    print('220 reply not received from server.')
+    print('220 reply not received from the server.')
 
 # Send HELO command and print server response.
-heloCommand = 'HELO Alice\r\n'
-clientSocket.send(heloCommand.encode())
-recv1 = clientSocket.recv(1024).decode()
+hello_command = 'HELO Alice\r\n'
+client_socket.send(hello_command.encode())
+recv1 = client_socket.recv(1024).decode()
 print(recv1)
 if recv1[:3] != '250':
-    print('250 reply not received from server.')
+    print('250 reply not received from the server.')
 
 # Send MAIL FROM command and print server response.
-# Fill in start
-
-
-# Fill in end
+mail_from_command = "MAIL FROM: <tankhanhdao@example.com>\r\n"  # Replace with your sender's email address
+recv2 = client_socket.recv(1024).decode()
+print(recv2)
+if recv2[:2] != '250':
+    print('250 reply not received from the server')
 
 # Send RCPT TO command and print server response.
-# Fill in start
-
-
-# Fill in end
+rcpt_to_command = "RCPT TO: <tankhanhdao@example.com>\r\n"  # Replace with your receiver's email address
+client_socket.send(rcpt_to_command.encode())
+recv3 = client_socket.recv(1024).decode()
+print(recv3)
+if recv3[:3] != '250':
+    print('250 reply not received from the server')
 
 # Send DATA command and print server response.
-# Fill in start
-
-
-# Fill in end
-
+data_command = 'DATA\r\n'
+client_socket.send(data_command.encode())
+recv4 = client_socket.recv(1024).decode()
+print(recv4)
+if recv4[:3] != '354':
+    print('354 reply not received from the server')
 
 # Send message data.
-# Fill in start
-
-
-# Fill in end
-
+client_socket.send(msg.encode())
 
 # Message ends with a single period.
-# Fill in start
-
-
-# Fill in end
-
+client_socket.send(endmsg.encode())
 
 # Send QUIT command and get server response.
-# Fill in start
+quit_command = 'QUIT\r\n'
+client_socket.send(quit_command.encode())
+recv5 = client_socket.recv(1024).decode()
+print(recv5)
+if recv5[:3] != '221':
+    print('221 reply not received from the server')
 
-
-# Fill in end
+client_socket.close()
