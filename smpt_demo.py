@@ -24,14 +24,14 @@ if recv1[:3] != '250':
     print('250 reply not received from the server.')
 
 # Send MAIL FROM command and print server response.
-mail_from_command = "MAIL FROM: <tankhanhdao@example.com>\r\n"  # Replace with your sender's email address
+mail_from_command = "MAIL FROM: <marychoyee@gmail.com>\r\n"  # Replace with your sender's email address
 recv2 = client_socket.recv(1024).decode()
 print(recv2)
 if recv2[:2] != '250':
     print('250 reply not received from the server')
 
 # Send RCPT TO command and print server response.
-rcpt_to_command = "RCPT TO: <tankhanhdao@example.com>\r\n"  # Replace with your receiver's email address
+rcpt_to_command = "RCPT TO: <cmyae@mail.ccsf.edu>\r\n"  # Replace with your receiver's email address
 client_socket.send(rcpt_to_command.encode())
 recv3 = client_socket.recv(1024).decode()
 print(recv3)
